@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA — Chocolatería Artesanal & Snacks Funcionales con Realidad Aumentada 3D</title>
-<meta name="description" content="AURA Chocolates & Snacks — chocolatería artesanal colombiana y snacks funcionales de legumbres con empaques inteligentes en Realidad Aumentada 3D.">
+<title>ChocoLegumNatural — Chocolatería Artesanal & Snacks Funcionales con Realidad Aumentada 3D</title>
+<meta name="description" content="ChocoLegumNatural — chocolatería artesanal colombiana y snacks funcionales de legumbres con empaques inteligentes en Realidad Aumentada 3D.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450;1,9..144,600&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23150B08'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23E3B04B' font-family='Georgia,serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23150B08'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23E3B04B' font-family='Georgia,serif'%3EC%3C/text%3E%3C/svg%3E">
 
 <style>
 /* ============ TOKENS ============ */
@@ -149,7 +149,7 @@ p{color:var(--ink-soft);}
   box-shadow:0 8px 30px -18px rgba(0,0,0,0.6);
 }
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.brand{display:flex;align-items:center;gap:0.6rem;font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--cream-text);}
+.brand{display:flex;align-items:center;gap:0.6rem;font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--cream-text);white-space:nowrap;}
 .brand-mark{
   width:34px;height:34px;border-radius:9px;
   background:conic-gradient(from 220deg,var(--gold-300),var(--gold-600),var(--gold-300));
@@ -334,6 +334,22 @@ section{padding:var(--space-6) 0;}
 .feature-media img{width:100%;height:100%;object-fit:cover;}
 .feature-media.pad img{object-fit:contain;padding:2.4rem;}
 
+.feature-media.stage{
+  background:radial-gradient(120% 120% at 28% 18%,#241309 0%,#0d0705 72%);
+  border:1px solid rgba(227,176,75,0.16);
+}
+.stage-host{position:absolute;inset:0;touch-action:none;cursor:grab;}
+.stage-host:active{cursor:grabbing;}
+.stage-host canvas{width:100% !important;height:100% !important;display:block;}
+.stage-tag{
+  position:absolute;top:16px;left:16px;z-index:5;
+  display:inline-flex;align-items:center;gap:0.45rem;
+  font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--gold-300);background:rgba(10,6,4,0.55);border:1px solid rgba(227,176,75,0.28);
+  padding:0.45em 0.85em;border-radius:100px;
+}
+.stage-tag svg{width:13px;height:13px;animation:swing 2.4s ease-in-out infinite;}
+
 /* Section header used repeatedly */
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;margin-bottom:var(--space-5);flex-wrap:wrap;}
 .section-head h2{max-width:20ch;}
@@ -384,8 +400,9 @@ section{padding:var(--space-6) 0;}
   border:1px solid rgba(227,176,75,0.18);
   box-shadow:0 40px 70px -30px rgba(0,0,0,0.6);
 }
-.phone-screen{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;}
+.phone-screen{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;background:radial-gradient(120% 120% at 30% 15%,#241309 0%,#0a0503 75%);}
 .phone-screen img{width:100%;height:100%;object-fit:cover;filter:brightness(0.72) saturate(1.05);}
+.phone-screen .stage-host{position:absolute;inset:0;}
 .pin{
   position:absolute;width:11px;height:11px;border-radius:50%;background:var(--gold-400);
   box-shadow:0 0 0 4px rgba(227,176,75,0.22);
@@ -466,7 +483,7 @@ tbody tr:hover{background:var(--cream-100);}
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
   <div class="wrap">
-    <a href="#top" class="brand"><span class="brand-mark">A</span>AURA <em>Chocolates</em></a>
+    <a href="#top" class="brand"><span class="brand-mark">C</span>ChocoLegum<em>Natural</em></a>
     <div class="nav-links">
       <a href="#identidad">Identidad</a>
       <a href="#productos">Productos</a>
@@ -495,7 +512,7 @@ tbody tr:hover{background:var(--cream-100);}
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow eyebrow--gold">Innovación gastronómica · Realidad aumentada 3D</span>
-      <h1>AURA<br><em>Chocolates &amp; Snacks</em></h1>
+      <h1>ChocoLegum<br><em>Natural</em></h1>
       <p class="lede">Chocolatería artesanal gourmet con rellenos exóticos y snacks funcionales a base de legumbres — con empaques que cobran vida en 3D al escanearlos.</p>
 
       <div class="hero-badges">
@@ -604,8 +621,9 @@ tbody tr:hover{background:var(--cream-100);}
       </div>
     </div>
     <div class="feature reveal">
-      <div class="feature-media pad">
-        <img src="https://tryaladdin.com/cdn/shop/files/20260629_104656.jpg?v=1782720519" alt="Chocolate gourmet con crema de pistacho y pasta kataifi" loading="lazy">
+      <div class="feature-media stage">
+        <div class="stage-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg> Modelo 3D · arrastra para rotar</div>
+        <div class="stage-host" id="stage-bonbon"></div>
       </div>
       <div>
         <h3 style="font-size:1.5rem;margin-bottom:0.6rem;">Rellenos innovadores &amp; texturas únicas</h3>
@@ -638,8 +656,9 @@ tbody tr:hover{background:var(--cream-100);}
           <li><span class="ico">✓</span><div><b>Sabores únicos</b> — <span>versión salada con especias naturales y versión dulce espolvoreada con cacao.</span></div></li>
         </ul>
       </div>
-      <div class="feature-media">
-        <img src="https://munchingwithmariyah.com/wp-content/uploads/2022/09/IMG_8832-scaled-1.jpg" alt="Bowl de garbanzos crujientes horneados con vegetales frescos" loading="lazy">
+      <div class="feature-media stage">
+        <div class="stage-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg> Modelo 3D · arrastra para rotar</div>
+        <div class="stage-host" id="stage-snack"></div>
       </div>
     </div>
   </div>
@@ -686,8 +705,9 @@ tbody tr:hover{background:var(--cream-100);}
         <li><span class="ico">🧪</span><div><b>Centros de formación agroindustrial</b> — <span>control de calidad organoléptico y análisis bromatológico del producto.</span></div></li>
       </ul>
     </div>
-    <div class="feature-media">
-      <img src="https://www.chocolaterie.brussels/cdn/shop/articles/3d2a33a0-ee38-4ef5-b059-24aab2a14faf_695460c8-dd1e-485b-b6a3-1719b680e1e9.webp?crop=center&height=630&v=1784453416&width=1200" alt="Proceso artesanal de elaboración de chocolate en taller" loading="lazy">
+    <div class="feature-media stage">
+      <div class="stage-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg> Modelo 3D · arrastra para rotar</div>
+      <div class="stage-host" id="stage-sena"></div>
     </div>
   </div>
 </section>
@@ -705,7 +725,7 @@ tbody tr:hover{background:var(--cream-100);}
       <div class="ar-steps">
         <div class="ar-step">
           <div class="step-num">01</div>
-          <div><h4>Escanear el QR en la caja</h4><p>El cliente apunta la cámara de su smartphone al empaque artesanal de Aura Chocolates — sin necesidad de instalar ninguna app.</p></div>
+          <div><h4>Escanear el QR en la caja</h4><p>El cliente apunta la cámara de su smartphone al empaque artesanal de ChocoLegumNatural — sin necesidad de instalar ninguna app.</p></div>
         </div>
         <div class="ar-step">
           <div class="step-num">02</div>
@@ -719,7 +739,7 @@ tbody tr:hover{background:var(--cream-100);}
 
       <div class="phone-demo">
         <div class="phone-screen">
-          <img src="https://skywell.software/wp-content/uploads/2019/04/AR-packaging-1024x684.jpg" alt="Demostración de escaneo de producto con realidad aumentada en smartphone" loading="lazy">
+          <div class="stage-host" id="stage-phone"></div>
           <span class="pin p1"></span><span class="pin-label">Cacao 70%</span>
           <span class="pin p2"></span><span class="pin-label">8g proteína</span>
           <span class="pin p3"></span><span class="pin-label">Origen: Huila</span>
@@ -788,19 +808,19 @@ tbody tr:hover{background:var(--cream-100);}
     <h2>¿Preguntas o comentarios?</h2>
     <p>Gracias por ser parte del futuro de la chocolatería artesanal y los snacks saludables con tecnología 3D y el respaldo del SENA.</p>
     <div class="contact-row">
-      <a href="mailto:contacto@aurachocolates.co">
+      <a href="mailto:contacto@chocolegumnatural.co">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        contacto@aurachocolates.co
+        contacto@chocolegumnatural.co
       </a>
       <span class="sep"></span>
-      <a href="https://www.aurachocolates.co" target="_blank" rel="noopener">
+      <a href="https://www.chocolegumnatural.co" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" stroke-linecap="round"/></svg>
-        www.aurachocolates.co
+        www.chocolegumnatural.co
       </a>
     </div>
 
     <div class="foot-bottom">
-      <div>© 2026 AURA Chocolates &amp; Snacks · Proyecto de emprendimiento apoyado por el SENA</div>
+      <div>© 2026 ChocoLegumNatural · Proyecto de emprendimiento apoyado por el SENA</div>
       <div>Imágenes de referencia: <a href="https://tryaladdin.com" target="_blank" rel="noopener">tryaladdin.com</a> · <a href="https://munchingwithmariyah.com" target="_blank" rel="noopener">munchingwithmariyah.com</a> · <a href="https://www.chocolaterie.brussels" target="_blank" rel="noopener">chocolaterie.brussels</a> · <a href="https://skywell.software" target="_blank" rel="noopener">skywell.software</a></div>
     </div>
   </div>
@@ -869,129 +889,33 @@ tbody tr:hover{background:var(--cream-100);}
   import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
   import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-  const host = document.getElementById('canvas-host');
-  const explodeBtn = document.getElementById('explodeBtn');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let renderer, scene, camera, controls, bar, shellTop, shellBottom, filling, beans = [];
-  let exploded = false;
+  /* ---------- shared materials (reused across every scene) ---------- */
+  const chocoMat  = new THREE.MeshPhysicalMaterial({ color:0x3b2318, roughness:0.32, metalness:0.06, clearcoat:0.55, clearcoatRoughness:0.28 });
+  const fillMat   = new THREE.MeshStandardMaterial({ color:0x8fa24b, roughness:0.55, metalness:0.05 });
+  const goldMat   = new THREE.MeshStandardMaterial({ color:0xe3b04b, roughness:0.3, metalness:0.45 });
+  const beanMat   = new THREE.MeshStandardMaterial({ color:0x241209, roughness:0.55 });
+  const ceramicMat= new THREE.MeshStandardMaterial({ color:0xf3e4c8, roughness:0.55, side:THREE.DoubleSide });
+  const chickpeaMat = new THREE.MeshStandardMaterial({ color:0xd9b46a, roughness:0.5 });
+  const lentilMat = new THREE.MeshStandardMaterial({ color:0xb5502e, roughness:0.45 });
+  const leafMat   = new THREE.MeshStandardMaterial({ color:0x6b8a4a, roughness:0.6, side:THREE.DoubleSide });
+  const podYellowMat = new THREE.MeshStandardMaterial({ color:0xd7a52a, roughness:0.55 });
+  const podOrangeMat = new THREE.MeshStandardMaterial({ color:0xc9722b, roughness:0.55 });
+  const podRedMat    = new THREE.MeshStandardMaterial({ color:0x7a3226, roughness:0.55 });
+  const woodMat   = new THREE.MeshStandardMaterial({ color:0xb08b5a, roughness:0.78 });
 
-  function init(){
-    if (!host) return;
-    try {
-      renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-    } catch(e){ return; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    host.appendChild(renderer.domElement);
-
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
-    camera.position.set(0, 1.15, 4.3);
-
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.minPolarAngle = Math.PI * 0.28;
-    controls.maxPolarAngle = Math.PI * 0.62;
-    controls.autoRotate = !reducedMotion;
-    controls.autoRotateSpeed = 1.1;
-    controls.target.set(0, 0, 0);
-
-    // Lighting
-    const hemi = new THREE.HemisphereLight(0x5a4030, 0x0a0503, 1.1);
-    scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xffdca8, 1.6);
-    key.position.set(3, 4.5, 2.5);
-    scene.add(key);
-    const rim = new THREE.PointLight(0xe3b04b, 0.9, 12);
-    rim.position.set(-2.5, 1, -2);
-    scene.add(rim);
-
-    // Ground shadow blob (fake AO)
-    const shadowTex = makeShadowTexture();
-    const shadowMat = new THREE.MeshBasicMaterial({ map:shadowTex, transparent:true, depthWrite:false });
-    const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 2.2), shadowMat);
-    shadowMesh.rotation.x = -Math.PI/2;
-    shadowMesh.position.y = -0.42;
-    scene.add(shadowMesh);
-
-    bar = new THREE.Group();
-    scene.add(bar);
-
-    const chocoMat = new THREE.MeshPhysicalMaterial({ color:0x3b2318, roughness:0.32, metalness:0.06, clearcoat:0.55, clearcoatRoughness:0.28 });
-    const fillMat = new THREE.MeshStandardMaterial({ color:0x8fa24b, roughness:0.55, metalness:0.05 });
-    const bitMat = new THREE.MeshStandardMaterial({ color:0xe3b04b, roughness:0.3, metalness:0.4 });
-
-    shellTop = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
-    shellTop.position.y = 0.185;
-    bar.add(shellTop);
-
-    shellBottom = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
-    shellBottom.position.y = -0.185;
-    bar.add(shellBottom);
-
-    filling = new THREE.Mesh(new RoundedBoxGeometry(2.2, 0.15, 0.95, 3, 0.05), fillMat);
-    filling.position.y = 0;
-    bar.add(filling);
-
-    for (let i=0;i<10;i++){
-      const s = 0.045 + Math.random()*0.03;
-      const bit = new THREE.Mesh(new THREE.IcosahedronGeometry(s, 0), bitMat);
-      bit.position.set((Math.random()-0.5)*1.9, 0.09, (Math.random()-0.5)*0.75);
-      bit.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
-      filling.add(bit);
-    }
-
-    // Floating cacao beans
-    const beanMat = new THREE.MeshStandardMaterial({ color:0x241209, roughness:0.5 });
-    for (let i=0;i<5;i++){
-      const bean = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.09, 3, 8), beanMat);
-      bean.userData = { r: 1.9 + Math.random()*0.5, speed: 0.15 + Math.random()*0.12, offset: Math.random()*Math.PI*2, y: 0.4 + Math.random()*0.6 };
-      scene.add(bean);
-      beans.push(bean);
-    }
-
-    // Gold dust points
-    const dustCount = 90;
-    const positions = new Float32Array(dustCount*3);
-    for (let i=0;i<dustCount;i++){
-      positions[i*3] = (Math.random()-0.5)*4.2;
-      positions[i*3+1] = Math.random()*2.2 - 0.2;
-      positions[i*3+2] = (Math.random()-0.5)*3;
-    }
-    const dustGeo = new THREE.BufferGeometry();
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const dustMat = new THREE.PointsMaterial({ color:0xe3b04b, size:0.018, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false });
-    const dust = new THREE.Points(dustGeo, dustMat);
-    scene.add(dust);
-
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(host);
-
-    let t0 = performance.now();
-    function animate(now){
-      const dt = Math.min((now - t0)/1000, 0.05); t0 = now;
-      controls.update();
-      beans.forEach(b => {
-        const time = now*0.001*b.userData.speed + b.userData.offset;
-        b.position.set(Math.cos(time)*b.userData.r*0.5, b.userData.y + Math.sin(time*1.3)*0.08, Math.sin(time)*b.userData.r*0.35);
-        b.rotation.x += dt*0.4; b.rotation.y += dt*0.6;
-      });
-      dust.rotation.y += dt*0.03;
-
-      const targetTop = exploded ? 0.62 : 0.185;
-      const targetBottom = exploded ? -0.62 : -0.185;
-      shellTop.position.y += (targetTop - shellTop.position.y) * 0.09;
-      shellBottom.position.y += (targetBottom - shellBottom.position.y) * 0.09;
-
-      renderer.render(scene, camera);
-      requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
+  let _shadowTex = null;
+  function shadowTexture(){
+    if (_shadowTex) return _shadowTex;
+    const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+    const ctx = c.getContext('2d');
+    const grad = ctx.createRadialGradient(128,128,10,128,128,128);
+    grad.addColorStop(0, 'rgba(0,0,0,0.55)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+    _shadowTex = new THREE.CanvasTexture(c);
+    return _shadowTex;
   }
 
   function makeSegmentedSlab(count, totalW, h, d, gap, mat){
@@ -1005,36 +929,265 @@ tbody tr:hover{background:var(--cream-100);}
     return g;
   }
 
-  function makeShadowTexture(){
-    const c = document.createElement('canvas'); c.width = 256; c.height = 256;
-    const ctx = c.getContext('2d');
-    const grad = ctx.createRadialGradient(128,128,10,128,128,128);
-    grad.addColorStop(0, 'rgba(0,0,0,0.55)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
-    const tex = new THREE.CanvasTexture(c);
-    return tex;
+  /* ---------- generic viewer: renderer + camera + controls + lighting ---------- */
+  function createStage(container, buildFn, opts = {}){
+    if (!container) return null;
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true }); }
+    catch(e){ console.warn('3D unavailable:', e); return null; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(opts.fov || 36, 1, 0.1, 50);
+    camera.position.set(...(opts.cameraPos || [0, 1.1, 4.3]));
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.minPolarAngle = Math.PI * 0.25;
+    controls.maxPolarAngle = Math.PI * 0.66;
+    controls.autoRotate = !reducedMotion;
+    controls.autoRotateSpeed = opts.spin ?? 1.1;
+    controls.target.set(0, opts.targetY ?? 0, 0);
+
+    const hemi = new THREE.HemisphereLight(0x5a4030, 0x0a0503, 1.1);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffdca8, 1.6);
+    key.position.set(3, 4.5, 2.5);
+    scene.add(key);
+    const rim = new THREE.PointLight(0xe3b04b, 0.8, 12);
+    rim.position.set(-2.5, 1, -2);
+    scene.add(rim);
+
+    const shadowMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(opts.shadowSize || 3.2, (opts.shadowSize || 3.2) * 0.62),
+      new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent:true, depthWrite:false })
+    );
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.y = opts.shadowY ?? -0.42;
+    scene.add(shadowMesh);
+
+    const ctx = buildFn(scene, THREE, RoundedBoxGeometry) || {};
+
+    function resize(){
+      const w = container.clientWidth, h = container.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    new ResizeObserver(resize).observe(container);
+
+    let visible = false, raf = null, t0 = performance.now();
+    function loop(now){
+      if (!visible){ raf = null; return; }
+      const dt = Math.min((now - t0) / 1000, 0.05); t0 = now;
+      controls.update();
+      if (ctx.update) ctx.update(dt, now);
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(loop);
+    }
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        visible = e.isIntersecting;
+        if (visible && !raf){ t0 = performance.now(); raf = requestAnimationFrame(loop); }
+      });
+    }, { threshold: 0.12 }).observe(container);
+
+    return { renderer, scene, camera, controls, ctx };
   }
 
-  function resize(){
-    if (!host || !renderer) return;
-    const w = host.clientWidth, h = host.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w/h;
-    camera.updateProjectionMatrix();
-  }
-  window.addEventListener('resize', resize);
+  /* ---------- model builders ---------- */
 
-  if (explodeBtn){
+  // 1. Segmented chocolate bar with an explodable cross-section (hero + phone demo)
+  function buildChocoBar(scene, { ambiance = false } = {}){
+    const bar = new THREE.Group();
+    scene.add(bar);
+
+    const shellTop = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
+    shellTop.position.y = 0.185;
+    bar.add(shellTop);
+
+    const shellBottom = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
+    shellBottom.position.y = -0.185;
+    bar.add(shellBottom);
+
+    const filling = new THREE.Mesh(new RoundedBoxGeometry(2.2, 0.15, 0.95, 3, 0.05), fillMat);
+    bar.add(filling);
+
+    for (let i = 0; i < 10; i++){
+      const s = 0.045 + Math.random() * 0.03;
+      const bit = new THREE.Mesh(new THREE.IcosahedronGeometry(s, 0), goldMat);
+      bit.position.set((Math.random() - 0.5) * 1.9, 0.09, (Math.random() - 0.5) * 0.75);
+      bit.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
+      filling.add(bit);
+    }
+
+    let beans = [], dust = null;
+    if (ambiance){
+      for (let i = 0; i < 5; i++){
+        const bean = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.09, 3, 8), beanMat);
+        bean.userData = { r: 1.9 + Math.random() * 0.5, speed: 0.15 + Math.random() * 0.12, offset: Math.random() * Math.PI * 2, y: 0.4 + Math.random() * 0.6 };
+        scene.add(bean);
+        beans.push(bean);
+      }
+      const dustCount = 90;
+      const positions = new Float32Array(dustCount * 3);
+      for (let i = 0; i < dustCount; i++){
+        positions[i*3] = (Math.random() - 0.5) * 4.2;
+        positions[i*3+1] = Math.random() * 2.2 - 0.2;
+        positions[i*3+2] = (Math.random() - 0.5) * 3;
+      }
+      const dustGeo = new THREE.BufferGeometry();
+      dustGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color:0xe3b04b, size:0.018, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false }));
+      scene.add(dust);
+    }
+
+    let exploded = false;
+    return {
+      setExploded(v){ exploded = v; },
+      update(dt, now){
+        beans.forEach(b => {
+          const time = now * 0.001 * b.userData.speed + b.userData.offset;
+          b.position.set(Math.cos(time) * b.userData.r * 0.5, b.userData.y + Math.sin(time * 1.3) * 0.08, Math.sin(time) * b.userData.r * 0.35);
+          b.rotation.x += dt * 0.4; b.rotation.y += dt * 0.6;
+        });
+        if (dust) dust.rotation.y += dt * 0.03;
+        const targetTop = exploded ? 0.62 : 0.185;
+        const targetBottom = exploded ? -0.62 : -0.185;
+        shellTop.position.y += (targetTop - shellTop.position.y) * 0.09;
+        shellBottom.position.y += (targetBottom - shellBottom.position.y) * 0.09;
+      }
+    };
+  }
+
+  // 2. Faceted gourmet bonbon with pistachio swirl and gold flecks
+  function buildBonbon(scene){
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const gem = new THREE.Mesh(new THREE.IcosahedronGeometry(0.62, 1), chocoMat);
+    gem.scale.set(1, 0.7, 1);
+    group.add(gem);
+
+    const swirl = new THREE.Mesh(new THREE.TorusKnotGeometry(0.2, 0.06, 90, 10, 2, 3), fillMat);
+    swirl.position.y = 0.4;
+    group.add(swirl);
+
+    const flecks = [];
+    for (let i = 0; i < 7; i++){
+      const fleck = new THREE.Mesh(new THREE.IcosahedronGeometry(0.045, 0), goldMat);
+      const a = Math.random() * Math.PI * 2, r = 0.3 + Math.random() * 0.25;
+      fleck.position.set(Math.cos(a) * r, 0.28 + Math.random() * 0.2, Math.sin(a) * r);
+      group.add(fleck); flecks.push(fleck);
+    }
+
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.72, 0.06, 28), goldMat);
+    base.position.y = -0.46;
+    group.add(base);
+
+    return { update(dt){ swirl.rotation.y += dt * 0.6; flecks.forEach((f,i)=> f.rotation.x += dt*(0.4+i*0.05)); } };
+  }
+
+  // 3. Ceramic bowl filled with baked chickpea & lentil snacks
+  function buildSnackBowl(scene){
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const pts = [
+      new THREE.Vector2(0.04, -0.5), new THREE.Vector2(0.22, -0.47), new THREE.Vector2(0.46, -0.38),
+      new THREE.Vector2(0.68, -0.22), new THREE.Vector2(0.85, -0.02), new THREE.Vector2(0.93, 0.16)
+    ];
+    const bowl = new THREE.Mesh(new THREE.LatheGeometry(pts, 40), ceramicMat);
+    group.add(bowl);
+
+    for (let i = 0; i < 45; i++){
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 0.72;
+      const s = 0.05 + Math.random() * 0.025;
+      const chick = new THREE.Mesh(new THREE.SphereGeometry(s, 8, 6), chickpeaMat);
+      chick.position.set(Math.cos(a) * r, -0.08 + Math.random() * 0.14, Math.sin(a) * r);
+      chick.scale.y = 0.82;
+      group.add(chick);
+    }
+    for (let i = 0; i < 10; i++){
+      const a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 0.66;
+      const lentil = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.018, 10), lentilMat);
+      lentil.position.set(Math.cos(a) * r, 0.08 + Math.random() * 0.05, Math.sin(a) * r);
+      lentil.rotation.x = Math.PI / 2; lentil.rotation.z = Math.random() * Math.PI;
+      group.add(lentil);
+    }
+    const leaves = [];
+    for (let i = 0; i < 5; i++){
+      const leaf = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.01, 0.05), leafMat);
+      const a = Math.random() * Math.PI * 2, r = Math.random() * 0.5;
+      leaf.position.set(Math.cos(a) * r, 0.13, Math.sin(a) * r);
+      leaf.rotation.y = Math.random() * Math.PI;
+      group.add(leaf); leaves.push(leaf);
+    }
+    return { update(dt, now){ leaves.forEach((l,i)=> l.position.y = 0.13 + Math.sin(now*0.001 + i)*0.01); } };
+  }
+
+  // 4. Cacao pod cluster in an open wooden crate (SENA / artisanal process)
+  function buildCacaoCluster(scene){
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const base = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.08, 1.1), woodMat);
+    base.position.y = -0.42; group.add(base);
+    const wallL = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.26, 1.1), woodMat);
+    wallL.position.set(-0.82, -0.29, 0); group.add(wallL);
+    const wallR = wallL.clone(); wallR.position.x = 0.82; group.add(wallR);
+    const wallF = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.26, 0.06), woodMat);
+    wallF.position.set(0, -0.29, 0.55); group.add(wallF);
+    const wallB = wallF.clone(); wallB.position.z = -0.55; group.add(wallB);
+
+    function pod(mat, x, y, z, rz){
+      const p = new THREE.Mesh(new THREE.CapsuleGeometry(0.17, 0.4, 4, 12), mat);
+      p.position.set(x, y, z); p.rotation.z = rz; p.rotation.y = Math.random() * Math.PI;
+      group.add(p); return p;
+    }
+    const pods = [
+      pod(podYellowMat, -0.4, -0.02, 0.08, 0.55),
+      pod(podOrangeMat, 0.12, 0.05, -0.08, -0.3),
+      pod(podRedMat, 0.5, -0.06, 0.14, 0.68)
+    ];
+
+    for (let i = 0; i < 14; i++){
+      const bean = new THREE.Mesh(new THREE.SphereGeometry(0.05, 8, 6), beanMat);
+      const a = Math.random() * Math.PI * 2, r = Math.random() * 0.62;
+      bean.position.set(Math.cos(a) * r, -0.34 + Math.random() * 0.05, Math.sin(a) * r);
+      bean.scale.set(1, 0.7, 1.3);
+      group.add(bean);
+    }
+    return { update(dt, now){ pods.forEach((p,i)=> p.rotation.x = Math.sin(now*0.0004 + i)*0.05); } };
+  }
+
+  /* ---------- wire up every stage on the page ---------- */
+  const heroCtx = createStage(document.getElementById('canvas-host'),
+    (scene) => buildChocoBar(scene, { ambiance: true }),
+    { cameraPos:[0,1.15,4.3], spin:1.1 });
+
+  const explodeBtn = document.getElementById('explodeBtn');
+  if (explodeBtn && heroCtx){
+    let exploded = false;
     explodeBtn.addEventListener('click', () => {
       exploded = !exploded;
+      heroCtx.ctx.setExploded(exploded);
       explodeBtn.textContent = exploded ? 'Vista completa' : 'Vista en capas';
       explodeBtn.classList.toggle('active', exploded);
     });
   }
 
-  try { init(); } catch(e){ console.warn('3D viewer unavailable:', e); if(host) host.style.display='none'; }
+  createStage(document.getElementById('stage-bonbon'), buildBonbon, { cameraPos:[0,0.55,3.1], targetY:0, spin:0.9 });
+  createStage(document.getElementById('stage-snack'), buildSnackBowl, { cameraPos:[0,1.0,3.2], targetY:-0.1, spin:0.8 });
+  createStage(document.getElementById('stage-sena'), buildCacaoCluster, { cameraPos:[0,0.75,3.3], targetY:-0.1, spin:0.7 });
+  createStage(document.getElementById('stage-phone'), (scene) => buildChocoBar(scene, { ambiance:false }), { cameraPos:[0,1.0,4.0], spin:1.4, shadowY:-0.4 });
 </script>
 
 </body>
