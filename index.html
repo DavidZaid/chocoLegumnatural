@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chocolegum Natural - Experiencia 3D & RA</title>
+  <title>Chocolegum Natural - Experiencia Interactiva</title>
   
   <!-- Librería A-Frame 3D -->
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <!-- Fuente Premium Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -15,52 +15,77 @@
       box-sizing: border-box;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    body {
+    body, html {
       margin: 0;
       padding: 0;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       background-color: #0d0d0d;
     }
 
-    /* Tarjeta Flotante Interactiva de Marketing */
+    /* Panel Flotante de Información */
     #info-card {
       position: absolute;
-      top: 20px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 92%;
-      max-width: 540px;
-      background: rgba(15, 12, 10, 0.85);
-      border: 1px solid rgba(224, 186, 126, 0.35);
+      width: 90%;
+      max-width: 550px;
+      background: rgba(18, 14, 11, 0.92);
+      border: 1px solid rgba(224, 186, 126, 0.4);
       color: #f7f4ef;
-      padding: 22px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-      z-index: 999;
-      backdrop-filter: blur(20px);
-      transition: all 0.4s ease;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      backdrop-filter: blur(15px);
     }
     .badge {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #e0ba7e;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     #card-title {
-      margin: 0 0 8px 0;
+      margin: 0 0 6px 0;
       color: #ffffff;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 700;
     }
     #card-text {
-      margin: 0;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      margin: 0 0 12px 0;
+      font-size: 0.88rem;
+      line-height: 1.4;
       color: #d1c7bd;
-      font-weight: 300;
+    }
+
+    /* Selector Interactivo en el Panel */
+    .nav-buttons {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      flex: 1;
+      min-width: 90px;
+      background: rgba(224, 186, 126, 0.15);
+      border: 1px solid rgba(224, 186, 126, 0.4);
+      color: #e0ba7e;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover, .nav-btn.active {
+      background: #e0ba7e;
+      color: #120e0b;
     }
 
     /* Galería de Imágenes HD */
@@ -68,139 +93,134 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 14px;
     }
     .image-card {
       position: relative;
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
-      height: 75px;
+      height: 70px;
       border: 1px solid rgba(224, 186, 126, 0.3);
-      cursor: pointer;
     }
     .image-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .image-card:hover img {
-      transform: scale(1.1);
     }
     .image-card span {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
       color: #fff;
-      font-size: 0.65rem;
-      padding: 3px 4px;
+      font-size: 0.6rem;
+      padding: 2px 4px;
       text-align: center;
-      font-weight: 600;
     }
 
-    /* Indicador de Instrucción */
     .instruction-bar {
       position: absolute;
-      bottom: 20px;
+      bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(224, 186, 126, 0.18);
+      background: rgba(224, 186, 126, 0.2);
       border: 1px solid rgba(224, 186, 126, 0.5);
       color: #e0ba7e;
-      padding: 10px 24px;
-      border-radius: 30px;
-      font-size: 0.85rem;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.8rem;
       font-weight: 600;
-      z-index: 999;
+      z-index: 1000;
       pointer-events: none;
-      backdrop-filter: blur(12px);
-      text-align: center;
+    }
+
+    /* Asegurar visibilidad del lienzo 3D */
+    a-scene {
+      width: 100vw;
+      height: 100vh;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <!-- Card Interactivo Principal -->
+  <!-- Tarjeta de Contenido Interactivo -->
   <div id="info-card">
     <span class="badge" id="card-badge">CHOCOLEGUM NATURAL</span>
     <h2 id="card-title">Chocolatería Artesanal & Legumbres</h2>
-    <p id="card-text">Toca o selecciona cualquiera de los 4 pedestales en 3D para explorar nuestra Misión, Visión 2030, Selección de Ingredientes Gourmet y el Respaldo SENA.</p>
+    
+    <!-- Botones interactivos directos -->
+    <div class="nav-buttons">
+      <button class="nav-btn active" onclick="showSection('mision')">Misión</button>
+      <button class="nav-btn" onclick="showSection('vision')">Visión 2030</button>
+      <button class="nav-btn" onclick="showSection('ingredientes')">Ingredientes</button>
+      <button class="nav-btn" onclick="showSection('sena')">SENA</button>
+    </div>
+
+    <p id="card-text">Selecciona los botones superiores o toca los pedestales 3D para explorar la propuesta de valor de Chocolegum Natural.</p>
     <div id="gallery-container"></div>
   </div>
 
   <div class="instruction-bar">
-    ✨ Toca cualquier pedestal 3D para explorar ✨
+    ✨ Selecciona una opción arriba o toca un pedestal 3D ✨
   </div>
 
-  <!-- Escena A-Frame 3D -->
-  <a-scene embedded vr-mode-ui="enabled: true">
-    <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
-    <a-light type="directional" color="#e0ba7e" intensity="0.9" position="-2 4 2"></a-light>
-    <a-light type="point" color="#8c4327" intensity="0.6" position="0 2 -2"></a-light>
+  <!-- Escena 3D A-Frame -->
+  <a-scene embedded cursor="rayOrigin: mouse">
+    <a-assets>
+      <!-- Precarga de imágenes para evitar fallos visuales -->
+      <img id="img-mision" src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
+      <img id="img-vision" src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
+      <img id="img-ingredientes" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
+      <img id="img-sena" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
+    </a-assets>
 
-    <!-- Cámara y Cursor -->
-    <a-entity camera look-controls raycaster="objects: .clickable" position="0 1.5 0">
-      <a-cursor color="#e0ba7e" fuse="false" raycaster="objects: .clickable"></a-cursor>
+    <!-- Iluminación -->
+    <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+    <a-light type="directional" color="#e0ba7e" intensity="1" position="-2 4 2"></a-light>
+
+    <!-- Cámara -->
+    <a-entity camera look-controls position="0 1.6 0"></a-entity>
+
+    <!-- Entorno -->
+    <a-sky color="#0d0d0d"></a-sky>
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#14100c"></a-plane>
+
+    <!-- Pedestal 1: Misión -->
+    <a-entity position="-2.1 0 -3.5" class="clickable" onclick="showSection('mision')">
+      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
+      <a-image src="#img-mision" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
+      <a-text value="MISIÓN" position="-0.35 1.2 0" color="#e0ba7e" width="3"></a-text>
     </a-entity>
 
-    <!-- Entorno Escénico -->
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="12" height="12" color="#0a0807"></a-plane>
-    <a-ring position="0 0.01 -4" rotation="-90 0 0" radius-inner="2.3" radius-outer="2.33" color="#e0ba7e" opacity="0.4"></a-ring>
-
-    <!-- Título Principal 3D -->
-    <a-text value="CHOCOLEGUM NATURAL" position="-1.8 3.3 -4" color="#FFFFFF" width="7"></a-text>
-    <a-text value="Tocancipa | Chocolateria Gourmet & Snacks de Legumbres" position="-2.1 2.9 -4" color="#e0ba7e" width="4.3"></a-text>
-
-    <!-- ==================== PEDESTAL 1: MISIÓN ==================== -->
-    <a-entity position="-2.2 0 -4">
-      <a-box class="clickable" onclick="showSection('mision')" position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#1a120c"
-             animation="property: position; to: 0 0.55 0; dir: alternate; loop: true; dur: 3000; easing: easeInOutSine">
-        <a-image src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" 
-                 position="0 0.8 0.41" width="0.72" height="0.52"></a-image>
-      </a-box>
-      <a-text value="1. MISIÓN" position="-0.5 1.3 0" color="#e0ba7e" width="3.5"></a-text>
+    <!-- Pedestal 2: Visión -->
+    <a-entity position="-0.7 0 -3.5" class="clickable" onclick="showSection('vision')">
+      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
+      <a-image src="#img-vision" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
+      <a-text value="VISIÓN" position="-0.35 1.2 0" color="#e0ba7e" width="3"></a-text>
     </a-entity>
 
-    <!-- ==================== PEDESTAL 2: VISIÓN ==================== -->
-    <a-entity position="-0.7 0 -3.3">
-      <a-box class="clickable" onclick="showSection('vision')" position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#1a120c"
-             animation="property: position; to: 0 0.55 0; dir: alternate; loop: true; dur: 3400; easing: easeInOutSine">
-        <a-image src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" 
-                 position="0 0.8 0.41" width="0.72" height="0.52"></a-image>
-      </a-box>
-      <a-text value="2. VISIÓN 2030" position="-0.7 1.3 0" color="#e0ba7e" width="3.5"></a-text>
+    <!-- Pedestal 3: Ingredientes -->
+    <a-entity position="0.7 0 -3.5" class="clickable" onclick="showSection('ingredientes')">
+      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
+      <a-image src="#img-ingredientes" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
+      <a-text value="INGREDIENTES" position="-0.6 1.2 0" color="#e0ba7e" width="3"></a-text>
     </a-entity>
 
-    <!-- ==================== PEDESTAL 3: INGREDIENTES ==================== -->
-    <a-entity position="0.7 0 -3.3">
-      <a-box class="clickable" onclick="showSection('ingredientes')" position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#1a120c"
-             animation="property: position; to: 0 0.55 0; dir: alternate; loop: true; dur: 3200; easing: easeInOutSine">
-        <a-image src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" 
-                 position="0 0.8 0.41" width="0.72" height="0.52"></a-image>
-      </a-box>
-      <a-text value="3. INGREDIENTES" position="-0.8 1.3 0" color="#e0ba7e" width="3.5"></a-text>
-    </a-entity>
-
-    <!-- ==================== PEDESTAL 4: ALIANZA SENA ==================== -->
-    <a-entity position="2.2 0 -4">
-      <a-box class="clickable" onclick="showSection('sena')" position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#1a120c"
-             animation="property: position; to: 0 0.55 0; dir: alternate; loop: true; dur: 3800; easing: easeInOutSine">
-        <a-image src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" 
-                 position="0 0.8 0.41" width="0.72" height="0.52"></a-image>
-      </a-box>
-      <a-text value="4. SENA" position="-0.4 1.3 0" color="#e0ba7e" width="3.5"></a-text>
+    <!-- Pedestal 4: SENA -->
+    <a-entity position="2.1 0 -3.5" class="clickable" onclick="showSection('sena')">
+      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
+      <a-image src="#img-sena" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
+      <a-text value="SENA" position="-0.25 1.2 0" color="#e0ba7e" width="3"></a-text>
     </a-entity>
   </a-scene>
 
-  <!-- Lógica Interactiva y Datos de Marketing -->
   <script>
     const contentData = {
       mision: {
         badge: "PROPÓSITO DE MARCA",
         title: "🎯 Nuestra Misión",
-        text: "Chocolegum Natural elabora y ofrece chocolates artesanales y snacks innovadores a base de harina de garbanzo y lentejas. Brindamos una experiencia diferente de sabor combinando creatividad, nutrición y elaboración artesanal con ingredientes de alta calidad.",
+        text: "Chocolegum Natural elabora y ofrece chocolates artesanales y snacks innovadores a base de harina de garbanzo y lentejas. Brindamos una experiencia diferente de sabor combinando creatividad, nutrición y elaboración artesanal.",
         gallery: [
           { name: "Chocolate Artesanal", url: "https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=400&q=80" },
           { name: "Snack Nutritivo", url: "https://images.unsplash.com/photo-1582176604856-e822b3174241?auto=format&fit=crop&w=400&q=80" },
@@ -210,7 +230,7 @@
       vision: {
         badge: "PROYECCIÓN E IMPACTO",
         title: "🚀 Visión (Año 2030)",
-        text: "Para el año 2030, Chocolegum Natural busca convertirse en una marca reconocida en Tocancipá y sus alrededores por ofrecer chocolates artesanales y snacks innovadores elaborados con ingredientes naturales como garbanzo y lentejas, destacándonos por innovación y compromiso.",
+        text: "Para el año 2030, Chocolegum Natural busca convertirse en una marca reconocida en Tocancipá y sus alrededores por ofrecer chocolates artesanales y snacks innovadores elaborados con ingredientes naturales como garbanzo y lentejas.",
         gallery: [
           { name: "Tocancipá & Región", url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80" },
           { name: "Expansión 2030", url: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80" },
@@ -219,8 +239,8 @@
       },
       ingredientes: {
         badge: "SELECCIÓN NATURAL & GOURMET",
-        title: "🌱 ¿Qué hay en nuestros productos?",
-        text: "Ingredientes seleccionados: Chocolate artesanal, frutas seleccionadas, crema de pistacho, pasta kataifi, frutos secos y la potencia nutricional de la harina de garbanzo y lentejas.",
+        title: "🌱 Ingredientes Seleccionados",
+        text: "Chocolate artesanal, frutas seleccionadas, crema de pistacho, pasta kataifi, frutos secos y la potencia nutricional de la harina de garbanzo y lentejas.",
         gallery: [
           { name: "Crema de Pistacho", url: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" },
           { name: "Kataifi & Frutos", url: "https://images.unsplash.com/photo-1508737027454-e6454ef46afd?auto=format&fit=crop&w=400&q=80" },
@@ -230,7 +250,7 @@
       sena: {
         badge: "INNOVACIÓN ACADÉMICA",
         title: "🤝 Relación con el SENA",
-        text: "Aplicamos conocimientos estratégicos de emprendimiento, ciencia de alimentos, administración y comercialización impartidos por el SENA, fortaleciendo nuestras habilidades para consolidar una unidad de negocio sólida y sostenible.",
+        text: "Aplicamos conocimientos estratégicos de emprendimiento, ciencia de alimentos, administración y comercialización impartidos por el SENA, fortaleciendo nuestras habilidades para consolidar una unidad de negocio sólida.",
         gallery: [
           { name: "Emprendimiento", url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" },
           { name: "Innovación Alimentos", url: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=400&q=80" },
@@ -247,6 +267,11 @@
       document.getElementById('card-title').innerText = data.title;
       document.getElementById('card-text').innerText = data.text;
 
+      // Actualizar estado activo en botones
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
       let galleryHTML = '<div class="image-gallery">';
       data.gallery.forEach(item => {
         galleryHTML += `
@@ -259,14 +284,10 @@
       galleryHTML += '</div>';
 
       document.getElementById('gallery-container').innerHTML = galleryHTML;
-
-      // Animación suave de actualización de tarjeta
-      const card = document.getElementById('info-card');
-      card.style.transform = 'translateX(-50%) translateY(-6px)';
-      setTimeout(() => {
-        card.style.transform = 'translateX(-50%) translateY(0)';
-      }, 200);
     }
+
+    // Cargar sección inicial
+    showSection('mision');
   </script>
 </body>
 </html>
