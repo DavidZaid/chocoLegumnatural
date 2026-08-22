@@ -1,293 +1,1041 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chocolegum Natural - Experiencia Interactiva</title>
-  
-  <!-- Librería A-Frame 3D -->
-  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #0d0d0d;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA — Chocolatería Artesanal & Snacks Funcionales con Realidad Aumentada 3D</title>
+<meta name="description" content="AURA Chocolates & Snacks — chocolatería artesanal colombiana y snacks funcionales de legumbres con empaques inteligentes en Realidad Aumentada 3D.">
 
-    /* Panel Flotante de Información */
-    #info-card {
-      position: absolute;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 550px;
-      background: rgba(18, 14, 11, 0.92);
-      border: 1px solid rgba(224, 186, 126, 0.4);
-      color: #f7f4ef;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      backdrop-filter: blur(15px);
-    }
-    .badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #e0ba7e;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    #card-title {
-      margin: 0 0 6px 0;
-      color: #ffffff;
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-    #card-text {
-      margin: 0 0 12px 0;
-      font-size: 0.88rem;
-      line-height: 1.4;
-      color: #d1c7bd;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450;1,9..144,600&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-    /* Selector Interactivo en el Panel */
-    .nav-buttons {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .nav-btn {
-      flex: 1;
-      min-width: 90px;
-      background: rgba(224, 186, 126, 0.15);
-      border: 1px solid rgba(224, 186, 126, 0.4);
-      color: #e0ba7e;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .nav-btn:hover, .nav-btn.active {
-      background: #e0ba7e;
-      color: #120e0b;
-    }
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23150B08'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle' fill='%23E3B04B' font-family='Georgia,serif'%3EA%3C/text%3E%3C/svg%3E">
 
-    /* Galería de Imágenes HD */
-    .image-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .image-card {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      height: 70px;
-      border: 1px solid rgba(224, 186, 126, 0.3);
-    }
-    .image-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .image-card span {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.75);
-      color: #fff;
-      font-size: 0.6rem;
-      padding: 2px 4px;
-      text-align: center;
-    }
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --cacao-950:#120a07;
+  --cacao-900:#1a0f0a;
+  --cacao-800:#2a1811;
+  --cacao-700:#3b2318;
+  --cacao-600:#5a3626;
+  --cream-50:#fdfaf4;
+  --cream-100:#f7f0e3;
+  --cream-200:#efe4d0;
+  --gold-300:#f0d28c;
+  --gold-400:#e3b04b;
+  --gold-500:#c9932e;
+  --gold-600:#a8761f;
+  --pist-400:#a3b56b;
+  --pist-500:#8fa24b;
+  --pist-700:#5c6b33;
+  --ink:#241209;
+  --ink-soft:#4a382d;
+  --cream-text:#f3e9d8;
+  --cream-text-dim:#c9b8a3;
 
-    .instruction-bar {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(224, 186, 126, 0.2);
-      border: 1px solid rgba(224, 186, 126, 0.5);
-      color: #e0ba7e;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      z-index: 1000;
-      pointer-events: none;
-    }
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'Space Mono', monospace;
 
-    /* Asegurar visibilidad del lienzo 3D */
-    a-scene {
-      width: 100vw;
-      height: 100vh;
-      display: block;
-    }
-  </style>
+  --space-1:0.4rem;
+  --space-2:0.8rem;
+  --space-3:1.4rem;
+  --space-4:2.2rem;
+  --space-5:3.6rem;
+  --space-6:5.6rem;
+  --space-7:8.8rem;
+
+  --radius-s:10px;
+  --radius-m:18px;
+  --radius-l:28px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+@media (prefers-color-scheme: light){ :root{ } }
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+
+body{
+  font-family:var(--font-body);
+  background:var(--cream-100);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+ul{list-style:none;}
+
+:focus-visible{outline:2.5px solid var(--gold-400);outline-offset:3px;border-radius:4px;}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--space-4);}
+@media (max-width:640px){ .wrap{padding:0 var(--space-3);} }
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  font-weight:700;
+}
+.eyebrow--gold{color:var(--gold-500);}
+.eyebrow--cream{color:var(--gold-300);}
+
+.section-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:0.5em;
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:700;
+  padding:0.5em 1em;
+  border-radius:100px;
+  background:var(--cacao-900);
+  color:var(--gold-300);
+}
+.section-tag.tag--nature{background:#e9edd9;color:var(--pist-700);}
+.section-tag.tag--dark{background:var(--cacao-900);color:var(--gold-300);}
+
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
+h2{font-size:clamp(1.9rem,3.2vw,2.7rem);line-height:1.12;}
+h3{font-size:1.3rem;line-height:1.3;}
+p{color:var(--ink-soft);}
+
+.rule{
+  height:1px;
+  background:linear-gradient(90deg,var(--gold-500),transparent 70%);
+  margin:var(--space-3) 0 var(--space-4);
+}
+.rule--center{background:var(--gold-400);width:64px;height:2px;margin:var(--space-3) auto;}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.55em;
+  font-family:var(--font-body);font-weight:600;font-size:0.92rem;
+  padding:0.95em 1.7em;border-radius:100px;
+  transition:transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease);
+  white-space:nowrap;
+}
+.btn--gold{background:linear-gradient(135deg,var(--gold-300),var(--gold-500));color:var(--cacao-950);box-shadow:0 10px 24px -10px rgba(227,176,75,0.55);}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:0 16px 30px -10px rgba(227,176,75,0.7);}
+.btn--ghost{border:1.5px solid rgba(243,233,216,0.35);color:var(--cream-text);}
+.btn--ghost:hover{background:rgba(243,233,216,0.08);border-color:var(--gold-400);}
+.btn--ghost-dark{border:1.5px solid var(--cacao-700);color:var(--ink);}
+.btn--ghost-dark:hover{background:var(--cacao-900);color:var(--cream-text);}
+.btn--sm{padding:0.6em 1.15em;font-size:0.78rem;}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.3rem 0;
+  transition:padding 0.35s var(--ease), background 0.35s var(--ease), box-shadow .35s var(--ease);
+}
+.nav.is-scrolled{
+  padding:0.7rem 0;
+  background:rgba(18,10,7,0.86);
+  backdrop-filter:blur(14px);
+  box-shadow:0 8px 30px -18px rgba(0,0,0,0.6);
+}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.brand{display:flex;align-items:center;gap:0.6rem;font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--cream-text);}
+.brand-mark{
+  width:34px;height:34px;border-radius:9px;
+  background:conic-gradient(from 220deg,var(--gold-300),var(--gold-600),var(--gold-300));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);color:var(--cacao-950);font-size:1.05rem;font-weight:700;
+  box-shadow:0 6px 16px -6px rgba(227,176,75,0.6);
+}
+.brand em{font-style:italic;color:var(--gold-300);font-weight:450;}
+
+.nav-links{display:flex;align-items:center;gap:2.1rem;}
+.nav-links a{
+  font-size:0.85rem;font-weight:500;color:var(--cream-text-dim);
+  transition:color 0.25s var(--ease);position:relative;
+}
+.nav-links a:hover{color:var(--cream-text);}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--gold-400);transition:width .3s var(--ease);}
+.nav-links a:hover::after{width:100%;}
+
+.nav-cta{display:flex;align-items:center;gap:0.9rem;}
+.nav-burger{display:none;flex-direction:column;gap:5px;width:24px;}
+.nav-burger span{height:2px;background:var(--cream-text);border-radius:2px;transition:transform .3s var(--ease),opacity .3s var(--ease);}
+.mobile-panel{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--cacao-950);padding:6.5rem 2rem 2rem;
+  flex-direction:column;gap:1.6rem;
+}
+.mobile-panel.open{display:flex;}
+.mobile-panel a{font-family:var(--font-display);font-size:1.5rem;color:var(--cream-text);}
+
+@media (max-width:880px){
+  .nav-links, .nav-cta .btn--ghost{display:none;}
+  .nav-burger{display:flex;}
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  background:radial-gradient(120% 90% at 12% -10%,#241309 0%,var(--cacao-950) 55%),var(--cacao-950);
+  color:var(--cream-text);
+  padding:9.5rem 0 5rem;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(1.5px 1.5px at 20% 30%, rgba(227,176,75,.5) 0, transparent 60%),
+                    radial-gradient(1.5px 1.5px at 70% 20%, rgba(227,176,75,.35) 0, transparent 60%),
+                    radial-gradient(2px 2px at 85% 65%, rgba(227,176,75,.4) 0, transparent 60%),
+                    radial-gradient(1.5px 1.5px at 40% 80%, rgba(227,176,75,.3) 0, transparent 60%),
+                    radial-gradient(1.5px 1.5px at 55% 45%, rgba(227,176,75,.25) 0, transparent 60%);
+  animation:drift 14s ease-in-out infinite alternate;
+}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+
+.hero-grid{
+  display:grid;grid-template-columns:1.05fr 0.95fr;gap:var(--space-6);align-items:center;
+  position:relative;z-index:2;
+}
+@media (max-width:960px){ .hero-grid{grid-template-columns:1fr;gap:var(--space-5);} }
+
+.hero-badges{display:flex;flex-wrap:wrap;gap:0.7rem;margin:var(--space-4) 0 var(--space-5);}
+.badge{
+  display:inline-flex;align-items:center;gap:0.55rem;
+  padding:0.6em 1.05em;border-radius:100px;
+  border:1px solid rgba(227,176,75,0.28);
+  background:rgba(227,176,75,0.06);
+  font-size:0.8rem;font-weight:600;color:var(--gold-300);
+}
+.badge svg{width:15px;height:15px;flex-shrink:0;}
+
+.hero h1{
+  font-size:clamp(2.7rem,6vw,4.6rem);
+  color:var(--cream-50);
+  line-height:0.98;
+  margin:var(--space-3) 0 var(--space-3);
+}
+.hero h1 em{font-style:italic;font-weight:450;color:var(--gold-300);}
+.hero .lede{font-size:1.08rem;max-width:46ch;color:var(--cream-text-dim);}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:1rem;margin-top:var(--space-4);}
+
+.drag-hint{
+  display:flex;align-items:center;gap:0.5rem;margin-top:var(--space-4);
+  font-family:var(--font-mono);font-size:0.72rem;color:var(--cream-text-dim);letter-spacing:0.03em;
+}
+.drag-hint svg{width:16px;height:16px;color:var(--gold-400);animation:swing 2.4s ease-in-out infinite;}
+@keyframes swing{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+
+/* AR viewfinder */
+.ar-frame{
+  position:relative;
+  aspect-ratio:1/1.08;
+  border-radius:26px;
+  background:linear-gradient(155deg,#1c110b,#0f0906);
+  border:1px solid rgba(227,176,75,0.16);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,0.7), inset 0 0 60px rgba(0,0,0,0.5);
+  overflow:hidden;
+}
+.ar-frame canvas{width:100% !important;height:100% !important;display:block;}
+.ar-corner{position:absolute;width:26px;height:26px;border-color:var(--gold-400);opacity:0.85;z-index:5;}
+.ar-corner.tl{top:16px;left:16px;border-top:2px solid;border-left:2px solid;border-top-left-radius:8px;}
+.ar-corner.tr{top:16px;right:16px;border-top:2px solid;border-right:2px solid;border-top-right-radius:8px;}
+.ar-corner.bl{bottom:16px;left:16px;border-bottom:2px solid;border-left:2px solid;border-bottom-left-radius:8px;}
+.ar-corner.br{bottom:16px;right:16px;border-bottom:2px solid;border-right:2px solid;border-bottom-right-radius:8px;}
+
+.ar-scanline{
+  position:absolute;left:6%;right:6%;height:2px;z-index:4;
+  background:linear-gradient(90deg,transparent,rgba(163,181,107,0.9),transparent);
+  box-shadow:0 0 16px 3px rgba(163,181,107,0.55);
+  animation:scan 3.4s ease-in-out infinite;
+}
+@keyframes scan{0%{top:12%;opacity:0}10%{opacity:1}50%{top:86%;opacity:1}60%{opacity:0}100%{top:12%;opacity:0}}
+
+.ar-status{
+  position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:6;
+  display:flex;align-items:center;gap:0.5rem;
+  font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--pist-400);background:rgba(10,6,4,0.55);border:1px solid rgba(163,181,107,0.3);
+  padding:0.4em 0.85em;border-radius:100px;
+}
+.dot-live{width:6px;height:6px;border-radius:50%;background:var(--pist-400);animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.35;transform:scale(0.7)}}
+
+.ar-readout{
+  position:absolute;left:16px;right:16px;bottom:16px;z-index:6;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:0.6rem;
+  font-family:var(--font-mono);
+}
+.ar-readout .line{font-size:0.66rem;color:var(--cream-text-dim);line-height:1.7;}
+.ar-readout .line b{color:var(--gold-300);font-weight:700;}
+.ar-toggle{
+  font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.05em;
+  border:1px solid rgba(227,176,75,0.4);color:var(--gold-300);
+  padding:0.55em 0.9em;border-radius:8px;background:rgba(227,176,75,0.08);
+  transition:background .25s var(--ease), transform .25s var(--ease);
+  flex-shrink:0;
+}
+.ar-toggle:hover{background:rgba(227,176,75,0.18);transform:translateY(-1px);}
+.ar-toggle.active{background:var(--gold-400);color:var(--cacao-950);}
+
+/* ============ SECTION SHELLS ============ */
+section{padding:var(--space-6) 0;}
+.section--dark{background:var(--cacao-950);color:var(--cream-text);}
+.section--cream{background:var(--cream-100);}
+.section--cream-alt{background:var(--cream-50);}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease), transform .8s var(--ease);}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+.reveal-stagger > *{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+.reveal-stagger.in-view > *{opacity:1;transform:translateY(0);}
+.reveal-stagger.in-view > *:nth-child(1){transition-delay:.05s}
+.reveal-stagger.in-view > *:nth-child(2){transition-delay:.15s}
+.reveal-stagger.in-view > *:nth-child(3){transition-delay:.25s}
+
+/* Identity statement */
+.identity{text-align:center;}
+.identity .glyph{width:34px;height:34px;margin:0 auto var(--space-3);color:var(--gold-400);}
+.identity h2{color:var(--cream-50);max-width:16ch;margin:0 auto;}
+.identity p{max-width:58ch;margin:var(--space-3) auto 0;color:var(--cream-text-dim);font-size:1.05rem;}
+
+/* Two-column feature (mission/product) */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);align-items:center;}
+.feature.reverse .feature-media{order:2;}
+@media (max-width:900px){ .feature, .feature.reverse .feature-media{grid-template-columns:1fr;order:0;} .feature{grid-template-columns:1fr;} }
+
+.feature-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:var(--space-2);}
+.checklist{margin-top:var(--space-4);display:flex;flex-direction:column;gap:1.1rem;}
+.checklist li{display:flex;gap:0.85rem;align-items:flex-start;}
+.checklist .ico{
+  flex-shrink:0;width:26px;height:26px;border-radius:8px;
+  background:var(--cacao-900);color:var(--gold-400);
+  display:flex;align-items:center;justify-content:center;
+}
+.checklist.nature .ico{background:#eaf0dc;color:var(--pist-700);}
+.checklist b{color:var(--ink);}
+.checklist span{color:var(--ink-soft);font-size:0.96rem;}
+
+.feature-media{
+  position:relative;border-radius:var(--radius-l);overflow:hidden;
+  background:var(--cream-50);border:1px solid var(--cream-200);
+  box-shadow:0 30px 60px -30px rgba(36,18,9,0.35);
+  aspect-ratio:4/3.4;
+}
+.feature-media img{width:100%;height:100%;object-fit:cover;}
+.feature-media.pad img{object-fit:contain;padding:2.4rem;}
+
+/* Section header used repeatedly */
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1.5rem;margin-bottom:var(--space-5);flex-wrap:wrap;}
+.section-head h2{max-width:20ch;}
+
+/* Card grids */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;}
+@media (max-width:820px){ .card-grid{grid-template-columns:1fr;} }
+
+.card{
+  background:var(--cream-50);border:1px solid var(--cream-200);border-radius:var(--radius-m);
+  padding:var(--space-4);
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(36,18,9,0.28);border-color:var(--gold-400);}
+.card-icon{
+  width:44px;height:44px;border-radius:12px;margin-bottom:var(--space-3);
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--cacao-800),var(--cacao-950));color:var(--gold-400);
+}
+.card p{margin-top:0.5rem;font-size:0.95rem;}
+
+.card--on-dark{background:rgba(255,255,255,0.03);border:1px solid rgba(227,176,75,0.16);}
+.card--on-dark h3{color:var(--cream-50);}
+.card--on-dark p{color:var(--cream-text-dim);}
+.card--on-dark .card-icon{background:linear-gradient(135deg,var(--gold-300),var(--gold-600));color:var(--cacao-950);}
+
+/* AR experience steps */
+.ar-steps{display:grid;grid-template-columns:1fr;gap:1.6rem;}
+.ar-step{display:grid;grid-template-columns:56px 1fr;gap:1.2rem;position:relative;padding-bottom:1.6rem;}
+.ar-step:not(:last-child)::before{
+  content:'';position:absolute;left:27px;top:56px;bottom:0;width:1px;
+  background:linear-gradient(var(--gold-500),transparent);
+}
+.step-num{
+  width:56px;height:56px;border-radius:16px;flex-shrink:0;
+  background:linear-gradient(150deg,var(--cacao-800),var(--cacao-950));
+  border:1px solid rgba(227,176,75,0.3);color:var(--gold-300);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-weight:700;font-size:0.95rem;
+}
+.ar-step h4{color:var(--cream-50);font-size:1.08rem;margin-bottom:0.3rem;}
+.ar-step p{color:var(--cream-text-dim);font-size:0.95rem;}
+
+/* Phone AR demo mock */
+.phone-demo{
+  position:relative;border-radius:32px;padding:14px;
+  background:linear-gradient(160deg,#241309,#0d0705);
+  border:1px solid rgba(227,176,75,0.18);
+  box-shadow:0 40px 70px -30px rgba(0,0,0,0.6);
+}
+.phone-screen{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;}
+.phone-screen img{width:100%;height:100%;object-fit:cover;filter:brightness(0.72) saturate(1.05);}
+.pin{
+  position:absolute;width:11px;height:11px;border-radius:50%;background:var(--gold-400);
+  box-shadow:0 0 0 4px rgba(227,176,75,0.22);
+}
+.pin::after{
+  content:'';position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(227,176,75,0.55);
+  animation:ring 2.2s ease-out infinite;
+}
+@keyframes ring{0%{transform:scale(0.6);opacity:0.9}100%{transform:scale(2.1);opacity:0}}
+.pin-label{
+  position:absolute;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.03em;
+  background:rgba(10,6,4,0.78);border:1px solid rgba(227,176,75,0.35);color:var(--gold-300);
+  padding:0.4em 0.7em;border-radius:8px;white-space:nowrap;backdrop-filter:blur(4px);
+}
+.p1{top:20%;left:14%;} .p1 + .pin-label{top:16%;left:26%;}
+.p2{top:46%;left:66%;} .p2 + .pin-label{top:50%;left:20%;}
+.p3{top:76%;left:30%;} .p3 + .pin-label{top:80%;left:38%;}
+
+/* Table */
+.spec-table-wrap{overflow-x:auto;border-radius:var(--radius-m);border:1px solid var(--cream-200);}
+table{width:100%;border-collapse:collapse;min-width:680px;background:var(--cream-50);}
+thead th{
+  background:var(--cacao-950);color:var(--gold-300);
+  font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
+  text-align:left;padding:1.1em 1.3em;font-weight:700;
+}
+tbody td{padding:1.2em 1.3em;border-top:1px solid var(--cream-200);font-size:0.92rem;color:var(--ink-soft);vertical-align:top;}
+tbody td:first-child{color:var(--ink);font-weight:700;font-family:var(--font-display);font-size:1rem;}
+tbody tr:hover{background:var(--cream-100);}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-5);align-items:center;}
+@media (max-width:820px){ .stats{grid-template-columns:1fr;} }
+.stat-num{font-family:var(--font-display);font-size:clamp(3.2rem,6vw,4.6rem);color:var(--gold-500);line-height:1;}
+.stat-num sup{font-size:0.45em;top:-0.6em;}
+.stat-label{margin-top:0.5rem;font-size:0.92rem;color:var(--ink-soft);max-width:26ch;}
+.stat-block{margin-bottom:var(--space-5);}
+.stat-block:last-child{margin-bottom:0;}
+.stat-block.green .stat-num{color:var(--pist-700);}
+.impact-card{
+  background:var(--cream-50);border:1px solid var(--cream-200);border-radius:var(--radius-m);
+  padding:var(--space-5);box-shadow:0 30px 60px -34px rgba(36,18,9,0.3);
+}
+.impact-card ul{margin-top:1.1rem;display:flex;flex-direction:column;gap:0.8rem;}
+.impact-card li{display:flex;gap:0.7rem;align-items:flex-start;font-size:0.93rem;color:var(--ink-soft);}
+.impact-card svg{flex-shrink:0;width:19px;height:19px;color:var(--pist-500);margin-top:0.1em;}
+
+/* Footer / CTA */
+.footer{
+  background:radial-gradient(120% 100% at 50% 0%,#241309 0%,var(--cacao-950) 60%);
+  color:var(--cream-text);text-align:center;padding:var(--space-7) 0 var(--space-5);
+}
+.footer .glyph-ring{
+  width:60px;height:60px;border-radius:50%;margin:0 auto var(--space-4);
+  border:1px solid rgba(227,176,75,0.35);display:flex;align-items:center;justify-content:center;color:var(--gold-400);
+}
+.footer h2{color:var(--cream-50);max-width:20ch;margin:0 auto;}
+.footer p{color:var(--cream-text-dim);max-width:48ch;margin:var(--space-3) auto var(--space-5);}
+.contact-row{display:inline-flex;flex-wrap:wrap;gap:0.9rem;justify-content:center;padding:0.9rem 1.3rem;border-radius:100px;border:1px solid rgba(227,176,75,0.25);}
+.contact-row a{display:inline-flex;align-items:center;gap:0.55rem;font-size:0.88rem;font-weight:600;color:var(--gold-300);padding:0.4em 0.8em;}
+.contact-row a svg{width:16px;height:16px;}
+.contact-row .sep{width:1px;background:rgba(227,176,75,0.25);}
+
+.foot-bottom{margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;flex-direction:column;gap:0.5rem;align-items:center;
+  font-family:var(--font-mono);font-size:0.68rem;color:rgba(243,233,216,0.35);letter-spacing:0.02em;}
+.foot-bottom a{color:rgba(227,176,75,0.55);}
+.foot-bottom a:hover{color:var(--gold-300);}
+
+/* utility */
+.center{text-align:center;}
+.mx-auto{margin-left:auto;margin-right:auto;}
+.mt-4{margin-top:var(--space-4);}
+</style>
 </head>
 <body>
 
-  <!-- Tarjeta de Contenido Interactivo -->
-  <div id="info-card">
-    <span class="badge" id="card-badge">CHOCOLEGUM NATURAL</span>
-    <h2 id="card-title">Chocolatería Artesanal & Legumbres</h2>
-    
-    <!-- Botones interactivos directos -->
-    <div class="nav-buttons">
-      <button class="nav-btn active" onclick="showSection('mision')">Misión</button>
-      <button class="nav-btn" onclick="showSection('vision')">Visión 2030</button>
-      <button class="nav-btn" onclick="showSection('ingredientes')">Ingredientes</button>
-      <button class="nav-btn" onclick="showSection('sena')">SENA</button>
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="brand-mark">A</span>AURA <em>Chocolates</em></a>
+    <div class="nav-links">
+      <a href="#identidad">Identidad</a>
+      <a href="#productos">Productos</a>
+      <a href="#ar-experience">RA 3D</a>
+      <a href="#sena">SENA</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#ar-experience" class="btn btn--ghost btn--sm">Ver experiencia RA</a>
+      <button class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#identidad">Identidad</a>
+  <a href="#productos">Productos</a>
+  <a href="#ar-experience">RA 3D</a>
+  <a href="#sena">SENA</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow eyebrow--gold">Innovación gastronómica · Realidad aumentada 3D</span>
+      <h1>AURA<br><em>Chocolates &amp; Snacks</em></h1>
+      <p class="lede">Chocolatería artesanal gourmet con rellenos exóticos y snacks funcionales a base de legumbres — con empaques que cobran vida en 3D al escanearlos.</p>
+
+      <div class="hero-badges">
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.4 5.1L20 8l-4 4 1 5.6L12 15l-5 2.6 1-5.6-4-4 5.6-.9L12 2z" stroke-linejoin="round"/></svg>
+          Proyecto apoyado por SENA
+        </span>
+        <span class="badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2.5" width="12" height="19" rx="2.4"/><path d="M10.5 18.5h3" stroke-linecap="round"/></svg>
+          Empaques inteligentes RA
+        </span>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#productos" class="btn btn--gold">Explorar productos</a>
+        <a href="#ar-experience" class="btn btn--ghost">Cómo funciona la RA</a>
+      </div>
+
+      <div class="drag-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Arrastra el empaque para explorarlo en 3D
+      </div>
     </div>
 
-    <p id="card-text">Selecciona los botones superiores o toca los pedestales 3D para explorar la propuesta de valor de Chocolegum Natural.</p>
-    <div id="gallery-container"></div>
+    <div>
+      <div class="ar-frame" id="arFrame">
+        <div class="ar-status"><span class="dot-live"></span> Analizando producto…</div>
+        <div class="ar-corner tl"></div><div class="ar-corner tr"></div>
+        <div class="ar-corner bl"></div><div class="ar-corner br"></div>
+        <div class="ar-scanline"></div>
+        <div id="canvas-host" style="position:absolute;inset:0;"></div>
+        <div class="ar-readout">
+          <div class="line">CACAO <b>70%</b><br>ORIGEN <b>Huila, CO</b></div>
+          <button class="ar-toggle" id="explodeBtn">Vista en capas</button>
+        </div>
+      </div>
+    </div>
   </div>
+</header>
 
-  <div class="instruction-bar">
-    ✨ Selecciona una opción arriba o toca un pedestal 3D ✨
+<!-- ============ IDENTITY ============ -->
+<section class="section--dark identity" id="identidad">
+  <div class="wrap reveal">
+    <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8l8-4 8 4-8 4-8-4z"/><path d="M4 8v8l8 4 8-4V8"/><path d="M12 12v8"/></svg>
+    <h2>Nuestra Identidad Alimentaria</h2>
+    <p>Fusionamos la tradición chocolatera artesanal colombiana, los superalimentos nutricionales y la tecnología inmersiva en Realidad Aumentada 3D para conectar con el consumidor moderno.</p>
+    <div class="rule rule--center"></div>
   </div>
+</section>
 
-  <!-- Escena 3D A-Frame -->
-  <a-scene embedded cursor="rayOrigin: mouse">
-    <a-assets>
-      <!-- Precarga de imágenes para evitar fallos visuales -->
-      <img id="img-mision" src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
-      <img id="img-vision" src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
-      <img id="img-ingredientes" src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
-      <img id="img-sena" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" crossorigin="anonymous">
-    </a-assets>
+<!-- ============ MISSION ============ -->
+<section class="section--cream">
+  <div class="wrap feature reveal">
+    <div>
+      <div class="feature-head"><span class="section-tag tag--nature">🌱 Impacto agroindustrial</span></div>
+      <h2>Transformar el arte dulce y nutricional de Colombia</h2>
+      <p class="mt-4">Creamos y comercializamos productos alimenticios de alta gama que combinan la indulgencia del cacao fino de aroma con opciones nutricionales funcionales.</p>
+      <ul class="checklist">
+        <li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Cacao colombiano 100% puro</b> — <span>promovemos el comercio justo con pequeños productores de cacao.</span></div></li>
+        <li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Calidad e innovación</b> — <span>rellenos artesanales de masa kataifi, cremas naturales y snacks horneados.</span></div></li>
+        <li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b>Experiencia inmersiva</b> — <span>educamos al consumidor sobre nutrición y origen mediante empaques 3D/RA.</span></div></li>
+      </ul>
+    </div>
+    <div class="feature-media pad">
+      <img src="https://tryaladdin.com/cdn/shop/files/20260629_104656.jpg?v=1782720519" alt="Barra de chocolate blanco con relleno de pistacho y kataifi, estilo Dubai" loading="lazy">
+    </div>
+  </div>
+</section>
 
-    <!-- Iluminación -->
-    <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
-    <a-light type="directional" color="#e0ba7e" intensity="1" position="-2 4 2"></a-light>
+<!-- ============ VISION ============ -->
+<section class="section--cream-alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--dark">👁 Proyección</span>
+        <h2 class="mt-4">Visión futura 2030</h2>
+      </div>
+    </div>
+    <div class="card-grid reveal-stagger">
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8l3 2 5-6 5 6 3-2-2 9H6L4 8z" stroke-linejoin="round"/></svg></div>
+        <h3>Liderazgo gourmet</h3>
+        <p>Ser reconocidos a nivel nacional e internacional como la marca referente en chocolatería artesanal con rellenos de autor y alta repostería.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 12a8.5 8.5 0 11-8.5-8.5" stroke-linecap="round"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Snacks funcionales</h3>
+        <p>Pioneros en la masificación de snacks crujientes y saludables a base de legumbres (garbanzo y lenteja) en el mercado juvenil y corporativo.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="12" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 7l1.5-3h5L16 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Vanguardia RA 3D</h3>
+        <p>Establecer el estándar de la industria agroalimentaria en empaques interactivos, conectando el producto físico con experiencias digitales 3D.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Cámara -->
-    <a-entity camera look-controls position="0 1.6 0"></a-entity>
+<!-- ============ PRODUCTS ============ -->
+<section class="section--cream" id="productos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--dark">💎 Exclusivo</span>
+        <h2 class="mt-4">Línea Chocolatería Gourmet</h2>
+      </div>
+    </div>
+    <div class="feature reveal">
+      <div class="feature-media pad">
+        <img src="https://tryaladdin.com/cdn/shop/files/20260629_104656.jpg?v=1782720519" alt="Chocolate gourmet con crema de pistacho y pasta kataifi" loading="lazy">
+      </div>
+      <div>
+        <h3 style="font-size:1.5rem;margin-bottom:0.6rem;">Rellenos innovadores &amp; texturas únicas</h3>
+        <ul class="checklist">
+          <li><span class="ico">★</span><div><b>Crema de pistacho &amp; pasta kataifi</b> — <span>inspirados en la repostería de autor oriental; combinación crujiente y extremadamente cremosa.</span></div></li>
+          <li><span class="ico">★</span><div><b>Crema de maní natural</b> — <span>relleno suave y artesanal, sin azúcares añadidos ni aceites hidrogenados.</span></div></li>
+          <li><span class="ico">★</span><div><b>Frutas deshidratadas &amp; frutos secos</b> — <span>trozos de mango, uchuva y arándanos colombianos maridados con almendras y avellanas tostadas.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Entorno -->
-    <a-sky color="#0d0d0d"></a-sky>
-    <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#14100c"></a-plane>
+<section class="section--cream-alt">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--nature">🌿 Nutrición</span>
+        <h2 class="mt-4">Línea Snacks de Legumbres</h2>
+      </div>
+    </div>
+    <div class="feature reverse reveal">
+      <div>
+        <span class="section-tag tag--nature" style="margin-bottom:1rem;display:inline-flex;">Gluten free &amp; plant-based</span>
+        <h3 style="font-size:1.5rem;margin:0.8rem 0 0.6rem;">Harina de garbanzo &amp; lenteja</h3>
+        <p>Alternativa crujiente horneada, no frita, desarrollada con harina de leguminosas colombianas de alto valor proteico.</p>
+        <ul class="checklist nature">
+          <li><span class="ico">✓</span><div><b>Proteína vegetal</b> — <span>8g de proteína por porción para nutrición activa.</span></div></li>
+          <li><span class="ico">✓</span><div><b>Rico en fibra</b> — <span>favorece la digestión y brinda saciedad prolongada.</span></div></li>
+          <li><span class="ico">✓</span><div><b>Sabores únicos</b> — <span>versión salada con especias naturales y versión dulce espolvoreada con cacao.</span></div></li>
+        </ul>
+      </div>
+      <div class="feature-media">
+        <img src="https://munchingwithmariyah.com/wp-content/uploads/2022/09/IMG_8832-scaled-1.jpg" alt="Bowl de garbanzos crujientes horneados con vegetales frescos" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Pedestal 1: Misión -->
-    <a-entity position="-2.1 0 -3.5" class="clickable" onclick="showSection('mision')">
-      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
-      <a-image src="#img-mision" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
-      <a-text value="MISIÓN" position="-0.35 1.2 0" color="#e0ba7e" width="3"></a-text>
-    </a-entity>
+<!-- ============ VALUE PROPS ============ -->
+<section class="section--cream">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--dark">✦ Valor agregado</span>
+        <h2 class="mt-4">¿Qué ofrecen nuestros productos?</h2>
+      </div>
+    </div>
+    <div class="card-grid reveal-stagger">
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v7a2 2 0 002 2h1v9M11 3v9M15 3c-1.5 1.5-2 3-2 5s.5 3.5 2 5v8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Experiencia sensorial</h3>
+        <p>El balance perfecto entre el crujiente de la pasta kataifi, la sedosidad del pistacho/maní y el toque frutal ácido en chocolate fino de aroma.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z" stroke-linejoin="round"/></svg></div>
+        <h3>Salud funcional</h3>
+        <p>Snacks nutritivos de bajo índice glucémico elaborados con legumbres, ideales para deportistas, niños y consumidores conscientes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44a1 1 0 01-.94 0l-7.9-4.44A1 1 0 013 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44a1 1 0 01.94 0l7.9 4.44c.32.17.53.5.53.88v9z"/><path d="M3.5 7l8.5 5 8.5-5M12 22V12"/></svg></div>
+        <h3>Interactividad 3D</h3>
+        <p>Empaques con Realidad Aumentada que cobran vida en 3D, mostrando el mapa de ingredientes, valor nutricional y procesos de fabricación.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Pedestal 2: Visión -->
-    <a-entity position="-0.7 0 -3.5" class="clickable" onclick="showSection('vision')">
-      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
-      <a-image src="#img-vision" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
-      <a-text value="VISIÓN" position="-0.35 1.2 0" color="#e0ba7e" width="3"></a-text>
-    </a-entity>
+<!-- ============ SENA ============ -->
+<section class="section--cream-alt" id="sena">
+  <div class="wrap feature reveal">
+    <div>
+      <span class="section-tag tag--nature">🏛 SENA + Emprendimiento</span>
+      <h2 class="mt-4">Acompañamiento técnico y financiero</h2>
+      <ul class="checklist">
+        <li><span class="ico">🎖</span><div><b>Fondo Emprender</b> — <span>formulación y capital semilla para la compra de maquinaria de chocolatería y empaque industrial.</span></div></li>
+        <li><span class="ico">🔬</span><div><b>Tecnoparque SENA</b> — <span>asesoría en I+D para la estandarización de fórmulas de harina de garbanzo y vida útil del relleno kataifi.</span></div></li>
+        <li><span class="ico">🧪</span><div><b>Centros de formación agroindustrial</b> — <span>control de calidad organoléptico y análisis bromatológico del producto.</span></div></li>
+      </ul>
+    </div>
+    <div class="feature-media">
+      <img src="https://www.chocolaterie.brussels/cdn/shop/articles/3d2a33a0-ee38-4ef5-b059-24aab2a14faf_695460c8-dd1e-485b-b6a3-1719b680e1e9.webp?crop=center&height=630&v=1784453416&width=1200" alt="Proceso artesanal de elaboración de chocolate en taller" loading="lazy">
+    </div>
+  </div>
+</section>
 
-    <!-- Pedestal 3: Ingredientes -->
-    <a-entity position="0.7 0 -3.5" class="clickable" onclick="showSection('ingredientes')">
-      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
-      <a-image src="#img-ingredientes" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
-      <a-text value="INGREDIENTES" position="-0.6 1.2 0" color="#e0ba7e" width="3"></a-text>
-    </a-entity>
+<!-- ============ AR EXPERIENCE ============ -->
+<section class="section--dark" id="ar-experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--dark">◫ Innovación digital</span>
+        <h2 class="mt-4" style="color:var(--cream-50);">Experiencia de usuario en RA 3D</h2>
+      </div>
+    </div>
+    <div class="feature reveal" style="align-items:flex-start;">
+      <div class="ar-steps">
+        <div class="ar-step">
+          <div class="step-num">01</div>
+          <div><h4>Escanear el QR en la caja</h4><p>El cliente apunta la cámara de su smartphone al empaque artesanal de Aura Chocolates — sin necesidad de instalar ninguna app.</p></div>
+        </div>
+        <div class="ar-step">
+          <div class="step-num">02</div>
+          <div><h4>Proyección 3D interactiva</h4><p>Aparece en pantalla el modelo tridimensional flotante del bombón o snack, desglosado por capas para explorar su composición.</p></div>
+        </div>
+        <div class="ar-step">
+          <div class="step-num">03</div>
+          <div><h4>Trazabilidad &amp; origen del cacao</h4><p>Se muestra la historia de los agricultores colombianos que cosecharon el cacao y los nutrientes reales de cada producto.</p></div>
+        </div>
+      </div>
 
-    <!-- Pedestal 4: SENA -->
-    <a-entity position="2.1 0 -3.5" class="clickable" onclick="showSection('sena')">
-      <a-box position="0 0.5 0" depth="0.8" height="1" width="0.8" color="#261b13"></a-box>
-      <a-image src="#img-sena" position="0 0.5 0.41" width="0.7" height="0.8"></a-image>
-      <a-text value="SENA" position="-0.25 1.2 0" color="#e0ba7e" width="3"></a-text>
-    </a-entity>
-  </a-scene>
+      <div class="phone-demo">
+        <div class="phone-screen">
+          <img src="https://skywell.software/wp-content/uploads/2019/04/AR-packaging-1024x684.jpg" alt="Demostración de escaneo de producto con realidad aumentada en smartphone" loading="lazy">
+          <span class="pin p1"></span><span class="pin-label">Cacao 70%</span>
+          <span class="pin p2"></span><span class="pin-label">8g proteína</span>
+          <span class="pin p3"></span><span class="pin-label">Origen: Huila</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const contentData = {
-      mision: {
-        badge: "PROPÓSITO DE MARCA",
-        title: "🎯 Nuestra Misión",
-        text: "Chocolegum Natural elabora y ofrece chocolates artesanales y snacks innovadores a base de harina de garbanzo y lentejas. Brindamos una experiencia diferente de sabor combinando creatividad, nutrición y elaboración artesanal.",
-        gallery: [
-          { name: "Chocolate Artesanal", url: "https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=400&q=80" },
-          { name: "Snack Nutritivo", url: "https://images.unsplash.com/photo-1582176604856-e822b3174241?auto=format&fit=crop&w=400&q=80" },
-          { name: "Elaboración", url: "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=400&q=80" }
-        ]
-      },
-      vision: {
-        badge: "PROYECCIÓN E IMPACTO",
-        title: "🚀 Visión (Año 2030)",
-        text: "Para el año 2030, Chocolegum Natural busca convertirse en una marca reconocida en Tocancipá y sus alrededores por ofrecer chocolates artesanales y snacks innovadores elaborados con ingredientes naturales como garbanzo y lentejas.",
-        gallery: [
-          { name: "Tocancipá & Región", url: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80" },
-          { name: "Expansión 2030", url: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80" },
-          { name: "Bienestar", url: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=400&q=80" }
-        ]
-      },
-      ingredientes: {
-        badge: "SELECCIÓN NATURAL & GOURMET",
-        title: "🌱 Ingredientes Seleccionados",
-        text: "Chocolate artesanal, frutas seleccionadas, crema de pistacho, pasta kataifi, frutos secos y la potencia nutricional de la harina de garbanzo y lentejas.",
-        gallery: [
-          { name: "Crema de Pistacho", url: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=400&q=80" },
-          { name: "Kataifi & Frutos", url: "https://images.unsplash.com/photo-1508737027454-e6454ef46afd?auto=format&fit=crop&w=400&q=80" },
-          { name: "Harinas Legumbres", url: "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=400&q=80" }
-        ]
-      },
-      sena: {
-        badge: "INNOVACIÓN ACADÉMICA",
-        title: "🤝 Relación con el SENA",
-        text: "Aplicamos conocimientos estratégicos de emprendimiento, ciencia de alimentos, administración y comercialización impartidos por el SENA, fortaleciendo nuestras habilidades para consolidar una unidad de negocio sólida.",
-        gallery: [
-          { name: "Emprendimiento", url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" },
-          { name: "Innovación Alimentos", url: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=400&q=80" },
-          { name: "Comercialización", url: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80" }
-        ]
+<!-- ============ SPECS TABLE ============ -->
+<section class="section--cream">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-tag tag--dark">▦ Ficha técnica</span>
+        <h2 class="mt-4">Resumen de productos &amp; especificaciones</h2>
+      </div>
+    </div>
+    <div class="spec-table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th>Ingredientes clave</th><th>Perfil de consumidor</th><th>Experiencia RA 3D</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Choco-Pistacho Kataifi</td><td>Cacao 70%, crema de pistacho, pasta kataifi</td><td>Gourmet, regalable, repostería de autor</td><td>Modelo 3D con corte de capas crujientes</td></tr>
+          <tr><td>Choco-Frutas &amp; Maní</td><td>Cacao, crema de maní, uchuva deshidratada</td><td>Amantes del dulce natural y equilibrio</td><td>Animación del origen del fruto seco</td></tr>
+          <tr><td>Snack Garbanzo / Lenteja</td><td>Harina de garbanzo, lenteja, especias</td><td>Deportistas, fit, opción salada/dulce</td><td>Gráfica interactiva de proteína/fibra</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT ============ -->
+<section class="section--cream-alt">
+  <div class="wrap stats">
+    <div class="reveal">
+      <span class="section-tag tag--dark">📈 Métricas</span>
+      <h2 class="mt-4" style="margin-bottom:2rem;">Impacto proyectado</h2>
+      <div class="stat-block">
+        <div class="stat-num" data-count="100" data-suffix="%">0%</div>
+        <div class="stat-label">Ingredientes naturales colombianos</div>
+      </div>
+      <div class="stat-block green">
+        <div class="stat-num" data-count="40" data-suffix="%" data-prefix="+">+0%</div>
+        <div class="stat-label">Aumento proteico en snacks vs. tradicionales</div>
+      </div>
+    </div>
+    <div class="impact-card reveal">
+      <h3>Sostenibilidad y empleo local</h3>
+      <p style="margin-top:0.6rem;">El proyecto no solo busca comercializar chocolates y snacks de alta gama, sino también encadenar productivamente a pequeños cacaocultores y productores de leguminosas en Colombia.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Generación de empleo directo para aprendices SENA.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg> Empaques biodegradables con tecnología RA reusable.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER / CTA ============ -->
+<footer class="footer" id="contacto">
+  <div class="wrap reveal">
+    <div class="glyph-ring">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>¿Preguntas o comentarios?</h2>
+    <p>Gracias por ser parte del futuro de la chocolatería artesanal y los snacks saludables con tecnología 3D y el respaldo del SENA.</p>
+    <div class="contact-row">
+      <a href="mailto:contacto@aurachocolates.co">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        contacto@aurachocolates.co
+      </a>
+      <span class="sep"></span>
+      <a href="https://www.aurachocolates.co" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" stroke-linecap="round"/></svg>
+        www.aurachocolates.co
+      </a>
+    </div>
+
+    <div class="foot-bottom">
+      <div>© 2026 AURA Chocolates &amp; Snacks · Proyecto de emprendimiento apoyado por el SENA</div>
+      <div>Imágenes de referencia: <a href="https://tryaladdin.com" target="_blank" rel="noopener">tryaladdin.com</a> · <a href="https://munchingwithmariyah.com" target="_blank" rel="noopener">munchingwithmariyah.com</a> · <a href="https://www.chocolaterie.brussels" target="_blank" rel="noopener">chocolaterie.brussels</a> · <a href="https://skywell.software" target="_blank" rel="noopener">skywell.software</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ UI SCRIPT ============ -->
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }, { passive:true });
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const panel = document.getElementById('mobilePanel');
+  burger.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    panel.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+  // Count-up stats
+  const counted = new WeakSet();
+  const statIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting || counted.has(entry.target)) return;
+      counted.add(entry.target);
+      const el = entry.target;
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) { el.textContent = prefix + target + suffix; return; }
+      const dur = 1400; const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
       }
-    };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stat-num').forEach(el => statIo.observe(el));
+</script>
 
-    function showSection(key) {
-      const data = contentData[key];
-      if (!data) return;
+<!-- ============ 3D / AR MODEL ============ -->
+<script type="importmap">
+{ "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
-      document.getElementById('card-badge').innerText = data.badge;
-      document.getElementById('card-title').innerText = data.title;
-      document.getElementById('card-text').innerText = data.text;
+  const host = document.getElementById('canvas-host');
+  const explodeBtn = document.getElementById('explodeBtn');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Actualizar estado activo en botones
-      const buttons = document.querySelectorAll('.nav-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+  let renderer, scene, camera, controls, bar, shellTop, shellBottom, filling, beans = [];
+  let exploded = false;
 
-      let galleryHTML = '<div class="image-gallery">';
-      data.gallery.forEach(item => {
-        galleryHTML += `
-          <div class="image-card">
-            <img src="${item.url}" alt="${item.name}">
-            <span>${item.name}</span>
-          </div>
-        `;
-      });
-      galleryHTML += '</div>';
+  function init(){
+    if (!host) return;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+    } catch(e){ return; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    host.appendChild(renderer.domElement);
 
-      document.getElementById('gallery-container').innerHTML = galleryHTML;
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
+    camera.position.set(0, 1.15, 4.3);
+
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.minPolarAngle = Math.PI * 0.28;
+    controls.maxPolarAngle = Math.PI * 0.62;
+    controls.autoRotate = !reducedMotion;
+    controls.autoRotateSpeed = 1.1;
+    controls.target.set(0, 0, 0);
+
+    // Lighting
+    const hemi = new THREE.HemisphereLight(0x5a4030, 0x0a0503, 1.1);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffdca8, 1.6);
+    key.position.set(3, 4.5, 2.5);
+    scene.add(key);
+    const rim = new THREE.PointLight(0xe3b04b, 0.9, 12);
+    rim.position.set(-2.5, 1, -2);
+    scene.add(rim);
+
+    // Ground shadow blob (fake AO)
+    const shadowTex = makeShadowTexture();
+    const shadowMat = new THREE.MeshBasicMaterial({ map:shadowTex, transparent:true, depthWrite:false });
+    const shadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 2.2), shadowMat);
+    shadowMesh.rotation.x = -Math.PI/2;
+    shadowMesh.position.y = -0.42;
+    scene.add(shadowMesh);
+
+    bar = new THREE.Group();
+    scene.add(bar);
+
+    const chocoMat = new THREE.MeshPhysicalMaterial({ color:0x3b2318, roughness:0.32, metalness:0.06, clearcoat:0.55, clearcoatRoughness:0.28 });
+    const fillMat = new THREE.MeshStandardMaterial({ color:0x8fa24b, roughness:0.55, metalness:0.05 });
+    const bitMat = new THREE.MeshStandardMaterial({ color:0xe3b04b, roughness:0.3, metalness:0.4 });
+
+    shellTop = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
+    shellTop.position.y = 0.185;
+    bar.add(shellTop);
+
+    shellBottom = makeSegmentedSlab(4, 2.3, 0.22, 1.05, 0.06, chocoMat);
+    shellBottom.position.y = -0.185;
+    bar.add(shellBottom);
+
+    filling = new THREE.Mesh(new RoundedBoxGeometry(2.2, 0.15, 0.95, 3, 0.05), fillMat);
+    filling.position.y = 0;
+    bar.add(filling);
+
+    for (let i=0;i<10;i++){
+      const s = 0.045 + Math.random()*0.03;
+      const bit = new THREE.Mesh(new THREE.IcosahedronGeometry(s, 0), bitMat);
+      bit.position.set((Math.random()-0.5)*1.9, 0.09, (Math.random()-0.5)*0.75);
+      bit.rotation.set(Math.random()*6, Math.random()*6, Math.random()*6);
+      filling.add(bit);
     }
 
-    // Cargar sección inicial
-    showSection('mision');
-  </script>
+    // Floating cacao beans
+    const beanMat = new THREE.MeshStandardMaterial({ color:0x241209, roughness:0.5 });
+    for (let i=0;i<5;i++){
+      const bean = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.09, 3, 8), beanMat);
+      bean.userData = { r: 1.9 + Math.random()*0.5, speed: 0.15 + Math.random()*0.12, offset: Math.random()*Math.PI*2, y: 0.4 + Math.random()*0.6 };
+      scene.add(bean);
+      beans.push(bean);
+    }
+
+    // Gold dust points
+    const dustCount = 90;
+    const positions = new Float32Array(dustCount*3);
+    for (let i=0;i<dustCount;i++){
+      positions[i*3] = (Math.random()-0.5)*4.2;
+      positions[i*3+1] = Math.random()*2.2 - 0.2;
+      positions[i*3+2] = (Math.random()-0.5)*3;
+    }
+    const dustGeo = new THREE.BufferGeometry();
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const dustMat = new THREE.PointsMaterial({ color:0xe3b04b, size:0.018, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false });
+    const dust = new THREE.Points(dustGeo, dustMat);
+    scene.add(dust);
+
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(host);
+
+    let t0 = performance.now();
+    function animate(now){
+      const dt = Math.min((now - t0)/1000, 0.05); t0 = now;
+      controls.update();
+      beans.forEach(b => {
+        const time = now*0.001*b.userData.speed + b.userData.offset;
+        b.position.set(Math.cos(time)*b.userData.r*0.5, b.userData.y + Math.sin(time*1.3)*0.08, Math.sin(time)*b.userData.r*0.35);
+        b.rotation.x += dt*0.4; b.rotation.y += dt*0.6;
+      });
+      dust.rotation.y += dt*0.03;
+
+      const targetTop = exploded ? 0.62 : 0.185;
+      const targetBottom = exploded ? -0.62 : -0.185;
+      shellTop.position.y += (targetTop - shellTop.position.y) * 0.09;
+      shellBottom.position.y += (targetBottom - shellBottom.position.y) * 0.09;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+
+  function makeSegmentedSlab(count, totalW, h, d, gap, mat){
+    const g = new THREE.Group();
+    const w = (totalW - gap*(count-1)) / count;
+    for (let i=0;i<count;i++){
+      const seg = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, 0.045), mat);
+      seg.position.x = -totalW/2 + w/2 + i*(w+gap);
+      g.add(seg);
+    }
+    return g;
+  }
+
+  function makeShadowTexture(){
+    const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+    const ctx = c.getContext('2d');
+    const grad = ctx.createRadialGradient(128,128,10,128,128,128);
+    grad.addColorStop(0, 'rgba(0,0,0,0.55)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,256,256);
+    const tex = new THREE.CanvasTexture(c);
+    return tex;
+  }
+
+  function resize(){
+    if (!host || !renderer) return;
+    const w = host.clientWidth, h = host.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w/h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener('resize', resize);
+
+  if (explodeBtn){
+    explodeBtn.addEventListener('click', () => {
+      exploded = !exploded;
+      explodeBtn.textContent = exploded ? 'Vista completa' : 'Vista en capas';
+      explodeBtn.classList.toggle('active', exploded);
+    });
+  }
+
+  try { init(); } catch(e){ console.warn('3D viewer unavailable:', e); if(host) host.style.display='none'; }
+</script>
+
 </body>
 </html>
